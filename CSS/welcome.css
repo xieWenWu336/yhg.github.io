@@ -1,0 +1,76 @@
+@charset "utf-8";
+/* CSS Document */
+
+/* 页面整体布局 */
+body{
+	/* 设置背景图像 */
+	background-image: url("../images/welcome.png");
+	width: 100%;
+	height: 100vh;
+	background-size: cover;
+	background-position: center;
+	
+	/* 使用Flexbox布局实现居中 */
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	align-items: center;
+	
+	/* 移除默认边距，防止滚动条 */
+	margin: 0;
+	overflow: hidden;
+}
+
+/* 标题样式 */
+h1{
+	line-height: 100px;
+	text-align: center;
+	font-size: 36px;
+	color: white;
+	/* 添加文字阴影提高可读性 */
+	text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
+	/* 应用淡入动画 */
+	animation: fadeIn 1.5s ease-in-out;
+}
+
+/* 进入按钮样式 */
+a.enter{
+	color: #000000;
+	/* 使用模糊背景效果 */
+	background-color: rgba(255, 255, 255, 0.046);
+	backdrop-filter: blur(10px);
+	-webkit-backdrop-filter: blur(10px);
+	font-size: 25px;
+	font-weight: 900;
+	border: 2px solid rgba(255, 255, 255, 0.3);
+	border-radius: 6px;
+	text-decoration: none;
+	padding: 12px 30px;
+	/* 应用淡入动画，延迟0.5秒 */
+	animation: fadeIn 1.5s ease-in-out 0.5s both;
+	/* 添加过渡效果 */
+	transition: all 0.3s ease;
+	/* 添加阴影效果 */
+	box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+}
+
+/* 按钮悬停效果 */
+a.enter:hover{
+	background-color: rgba(255, 255, 255, 0.3);
+	/* 轻微上浮效果 */
+	transform: translateY(-3px);
+	/* 增强阴影效果 */
+	box-shadow: 0 6px 12px rgba(0,0,0,0.2);
+}
+
+/* 动画定义 */
+@keyframes fadeIn {
+	from {
+		opacity: 0;
+		transform: translateY(20px);
+	}
+	to {
+		opacity: 1;
+		transform: translateY(0);
+	}
+}
