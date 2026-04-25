@@ -6,12 +6,33 @@
 	<link rel="stylesheet" href="../CSS/home.css" type="text/css">
     
     <script>
-	function checkPassword() {
+	function sha256(str) {
+		const encoder = new TextEncoder();
+		const data = encoder.encode(str);
+		return crypto.subtle.digest('SHA-256', data)
+			.then(hash => {
+				const hex = Array.from(new Uint8Array(hash))
+					.map(b => b.toString(16).padStart(2, '0'))
+					.join('');
+				return hex;
+			});
+	}
+	
+	async function checkPassword() {
 		var password = prompt("请输入访问密码:");
-		if (password === "eden______666") {
-			window.open("HTML/me.html","_black");
-		} else {
-			alert("密码错误，请重试！");
+		if (!password) return false;
+		
+		try {
+			const hashed = await sha256(password);
+			const correctHash = "8a931bec173d59343f0d062ad401174fd8147b7ecad93f127e5b16e68ccf2352";
+			
+			if (hashed === correctHash) {
+				window.open("me.html", "_blank");
+			} else {
+				alert("密码错误，请重试！");
+			}
+		} catch (error) {
+			alert("验证失败，请重试。");
 		}
 		return false;
 	}
