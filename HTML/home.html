@@ -24,7 +24,7 @@
 		
 		try {
 			const hashed = await sha256(password);
-			const correctHash = "8a931bec173d59343f0d062ad401174fd8147b7ecad93f127e5b16e68ccf2352";
+			const correctHash = "07fceed9808e3263048adeb97c2cf41d5b817e5885fc8dd660958e0061393ea3";
 			
 			if (hashed === correctHash) {
 				window.open("me.html", "_blank");
@@ -43,6 +43,6 @@
 <body>
 	<h1>个人主页</h1>
 	<p class = "name"><a href="../index.html" target="_blank">首页</a>&nbsp;|
-        &nbsp;<a href="me.html" onclick="return checkPassword();">简介</a>&nbsp;|&nbsp;爱好&nbsp;|&nbsp;联系我</p>
+        &nbsp;<a href="#" onclick="return checkPassword();">简介</a>&nbsp;|&nbsp;爱好&nbsp;|&nbsp;联系我</p>
 </body>
 </html>
