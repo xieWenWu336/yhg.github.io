@@ -5,55 +5,105 @@
 <title>个人信息</title>
 
 	<link rel="stylesheet" href="../CSS/me.css" type="text/css">
+	<style>
+	#content {
+		display: none;
+	}
+	</style>
+	
+	<script>
+	function sha256(str) {
+		const encoder = new TextEncoder();
+		const data = encoder.encode(str);
+		return crypto.subtle.digest('SHA-256', data)
+			.then(hash => {
+				const hex = Array.from(new Uint8Array(hash))
+					.map(b => b.toString(16).padStart(2, '0'))
+					.join('');
+				return hex;
+			});
+	}
+	
+	async function verifyPassword() {
+		var password = prompt("请输入访问密码:");
+		if (!password) {
+			alert("请输入密码！");
+			setTimeout(verifyPassword, 1000);
+			return;
+		}
+		
+		try {
+			const hashed = await sha256(password);
+			const correctHash = "07fceed9808e3263048adeb97c2cf41d5b817e5885fc8dd660958e0061393ea3";
+			
+			if (hashed === correctHash) {
+				document.getElementById('content').style.display = 'block';
+			} else {
+				alert("密码错误，请重试！");
+				verifyPassword();
+			}
+		} catch (error) {
+			alert("验证失败，请重试。");
+			verifyPassword();
+		}
+	}
+	
+	// 页面加载时自动验证密码
+	window.onload = function() {
+		verifyPassword();
+	};
+	</script>
 
 </head>
 
 <body>
-	<h1>个人主页</h1>
-	<p class = "name"><a href="welcome.html" target="_blank">首页</a>&nbsp;|&nbsp;简介&nbsp;|&nbsp;爱好&nbsp;|&nbsp;联系我</p>
-	<div class="kuang">
-		<div class="text">
-		  	<h6>基本信息</h6>
-			<p class="xinxi">
-				姓名：于宏刚
-			<br>
-				专业：软件技术
-			<br>
-				爱好：C语言、python、Web开发、移动应用开发、MySQL、Java
-			<br>
-				擅长：逻辑推理、建设思维、总结问题
-			</p>
+	<div id="content">
+		<h1>个人主页</h1>
+		<p class = "name"><a href="home.html">/返回首页</a></p>
+		<div class="kuang">
+			<div class="text">
+			  	<h6>基本信息</h6>
+				<p class="xinxi">
+					姓名：于宏刚
+				<br>
+					专业：软件技术
+				<br>
+					爱好：C语言、python、Web开发、移动应用开发、MySQL、Java
+				<br>
+					擅长：逻辑推理、建设思维、总结问题
+				</p>
+			</div>
 		</div>
-	</div>
-	<div class="kuang">
-		<div class="text">
-			<h6>个人简介</h6>
-			<p class="xinxi">
-				正在学习前端、编程相关知识，喜欢制作简单的网页和小项目。
-			</p>
+		<div class="kuang">
+			<div class="text">
+				<h6>个人简介</h6>
+				<p class="xinxi">
+					正在学习前端、编程相关知识，喜欢制作简单的网页和小项目。
+				</p>
+			</div>
 		</div>
-	</div>
-	<div class="kuang">
-		<div class="text">
-			<h6>计算机向兴趣</h6>
-			<ul>
-				<li>编程代码</li>
-				<li>测试代码</li>
-				<li>查缺补漏</li>
-				<li>总结问题</li>
-			</ul>
+		<div class="kuang">
+			<div class="text">
+				<h6>计算机向兴趣</h6>
+				<ul>
+					<li>编程代码</li>
+					<li>测试代码</li>
+					<li>查缺补漏</li>
+					<li>总结问题</li>
+				</ul>
+			</div>
 		</div>
-	</div>
-    <a name="hobby"></a>
-	<div class="kuang">
-		<div class="text">
-			<h6>计算机向兴趣</h6>
-			<ul>
-				<li>编程代码</li>
-				<li>测试代码</li>
-				<li>查缺补漏</li>
-				<li>总结问题</li>
-			</ul>
+		<a name="hobby"></a>
+		<div class="kuang">
+			<div class="text">
+				<h6>计算机向兴趣</h6>
+				<ul>
+					<li>编程代码</li>
+					<li>测试代码</li>
+					<li>查缺补漏</li>
+					<li>总结问题</li>
+				</ul>
+			</div>
 		</div>
 	</div>
 </body>

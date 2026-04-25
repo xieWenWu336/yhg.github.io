@@ -2,8 +2,21 @@
 <html>
 <head>
 <meta charset="utf-8">
-<title>无标题文档</title>
+<title>博客首页</title>
 	<link rel="stylesheet" href="../CSS/home.css" type="text/css">
+	<style>
+	#content {
+		display: none;
+	}
+	
+	.table {
+		display: none;
+	}
+	
+	.table.show {
+		display: table;
+	}
+	</style>
     
     <script>
 	function sha256(str) {
@@ -18,50 +31,110 @@
 			});
 	}
 	
-	async function checkPassword() {
+	function checkSession() {
+		// 检查是否有有效的会话
+		const sessionData = localStorage.getItem('home_page_session');
+		if (sessionData) {
+			try {
+				const data = JSON.parse(sessionData);
+				const currentTime = Date.now();
+				const sessionTime = data.timestamp;
+				const TEN_MINUTES = 10 * 60 * 10**3;
+				
+				// 检查会话是否在10分钟内
+				if (currentTime - sessionTime < TEN_MINUTES) {
+					return true; // 会话有效
+				}
+			} catch (error) {
+				// 会话数据无效，清除
+				localStorage.removeItem('home_page_session');
+			}
+		}
+		return false; // 会话无效
+	}
+	
+	function saveSession() {
+		// 保存会话信息
+		const sessionData = {
+			timestamp: Date.now()
+		};
+		localStorage.setItem('home_page_session', JSON.stringify(sessionData));
+	}
+	
+	async function verifyPassword() {
+		// 先检查会话
+		if (checkSession()) {
+			document.getElementById('content').style.display = 'block';
+			return;
+		}
+		
 		var password = prompt("请输入访问密码:");
-		if (!password) return false;
+		if (!password) {
+			alert("请输入密码！");
+			setTimeout(verifyPassword, 1000);
+			return;
+		}
 		
 		try {
 			const hashed = await sha256(password);
-			const correctHash = "07fceed9808e3263048adeb97c2cf41d5b817e5885fc8dd660958e0061393ea3";
+			const correctHash = "8a931bec173d59343f0d062ad401174fd8147b7ecad93f127e5b16e68ccf2352";
 			
 			if (hashed === correctHash) {
-				window.open("me.html", "_blank");
+				saveSession(); // 保存会话
+				document.getElementById('content').style.display = 'block';
 			} else {
 				alert("密码错误，请重试！");
+				verifyPassword();
 			}
 		} catch (error) {
 			alert("验证失败，请重试。");
+			verifyPassword();
 		}
-		return false;
 	}
+	
+	// 切换表格显示/隐藏
+	function toggleTable() {
+		const table = document.getElementById('tableBox');
+		table.classList.toggle('show');
+	}
+	
+	// 页面加载时自动验证密码
+	window.onload = function() {
+		verifyPassword();
+	};
 	</script>
     
 </head>
 
 <body>
-    
-	<h1>首页</h1>
-	<p id="name">
-        <a href="../index.html" target="_blank">首页</a>&nbsp;|
-        &nbsp;<a href="#" onclick="return checkPassword();">简介</a>&nbsp;|
-        &nbsp;<a href="#" onclick="return checkPassword();" #hobby>爱好</a>&nbsp;|
-        &nbsp;<a href="contact.html">笔记</a>&nbsp;|
-        &nbsp;<a href="contact.html">联系我</a>
-    </p>
-<!--    笔记填写模板-->
-    <div class="笔记">
-        <h3 class="笔记">2026年4月25日 周六</h3>
-        <p class="笔记">上午开始研究网站无法打开的原因，解决问题后开始编写首页主题内容，联系页面，爱好页面超链接，还有网站众多bug，还进行了加密处理，防误触被看隐私。还想在网站添加笔记内容。</p>
-    </div>
-    
-    <div class="笔记">
-        <h3 class="笔记">2026年4月24日 周五</h3>
-        <p class="笔记">下午开始设计个人主页，index，还有首页模板，并开始探索GitHub发行网页的方法，于23点发行网站，但无法使用</p>
-    </div>
-<!--    发行日期-->
-    <p id="day-发行">2026年4月25日发行</p>
+	<div id="content">
+		<h1>首页</h1>
+		<p id="name">
+			<a href="../index.html" target="_blank">首页</a>&nbsp;|
+			&nbsp;<a href="me.html" target="_blank">简介</a>&nbsp;|
+			&nbsp;<a href="#" #hobby>爱好</a>&nbsp;|
+			&nbsp;<a href="contact.html">联系我</a>
+		</p>
+        <button onclick="toggleTable()">笔记</button>
+            <table border="1px" id="tableBox" class="table" cellpadding="0" cellspacing="0">
+                <tr>
+                    <th width="70px"><a href="笔记/MySQL.html" class="笔记列表" target="_parent">MySQL</a></th>
+                    <th width="70px"><a href="笔记/python.html" class="笔记列表" target="_parent">python</a></th>
+                </tr>
+            </table>
+	<!--    笔记填写模板-->
+		<div class="日记">
+			<h3 class="日记">2026年4月25日 周六</h3>
+			<p class="日记">上午开始研究网站无法打开的原因，解决问题后开始编写首页主题内容，联系页面，爱好页面超链接，还有网站众多bug，还进行了加密处理，防误触被看隐私。还想在网站添加笔记内容。</p>
+		</div>
+		
+		<div class="日记">
+			<h3 class="日记">2026年4月24日 周五</h3>
+			<p class="日记">下午开始设计个人主页，index，还有首页模板，并开始探索GitHub发行网页的方法，于23点发行网站，但无法使用</p>
+		</div>
+	<!--    发行日期-->
+		<p id="day-发行">2026年4月25日发行</p>
+	</div>
     
 </body>
 </html>

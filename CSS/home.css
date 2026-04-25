@@ -15,14 +15,32 @@ a{
 	text-decoration: none;
 	color:#FFFFFF;
 }
-div.笔记{
+button{
+    margin-left: 10px;
+    margin-bottom: 18px;
+}
+.table{
+    display: none;
+}
+.show{
+    display: block;
+}
+table{
+    margin-left: 10px;
+    margin-bottom: 18px;
+}
+a.笔记列表{
+    color: black;
+    font-weight: 400;
+}
+div.日记{
     border: 2px solid black;
     margin-bottom: 18px
 }
-h3.笔记,p.笔记{
+h3.日记,p.日记{
     padding-left: 36px;
 }
-p.笔记{
+p.日记{
     text-indent: 36px;
     font-size: 18px;
 }

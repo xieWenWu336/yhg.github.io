@@ -36,6 +36,7 @@ h1{
 /* 进入按钮样式 */
 a.enter{
 	color: #000000;
+    
 	/* 使用模糊背景效果 */
 	background-color: rgba(255, 255, 255, 0.046);
 	backdrop-filter: blur(10px);
