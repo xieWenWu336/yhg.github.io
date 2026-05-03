@@ -9,6 +9,48 @@
 	#content {
 		display: none;
 	}
+	#auth-message {
+		display: none;
+		text-align: center;
+		margin-top: 120px;
+		font-size: 18px;
+		color: #333;
+	}
+	#timeout-overlay {
+		display: none;
+		position: fixed;
+		inset: 0;
+		background-color: rgba(255, 255, 255, 0.95);
+		z-index: 999;
+		display: flex;
+		flex-direction: column;
+		justify-content: center;
+		align-items: center;
+		padding: 20px;
+		text-align: center;
+	}
+	#timeout-overlay p {
+		font-size: 20px;
+		margin-bottom: 24px;
+		color: #333;
+	}
+	.action-btn {
+		display: inline-block;
+		margin: 0 10px;
+		padding: 12px 28px;
+		border: 2px solid rgba(0,0,0,0.2);
+		border-radius: 8px;
+		background-color: rgba(255,255,255,0.9);
+		color: #000;
+		text-decoration: none;
+		font-weight: 700;
+		transition: transform 0.2s ease, box-shadow 0.2s ease, background-color 0.2s ease;
+	}
+	.action-btn:hover {
+		transform: translateY(-2px);
+		box-shadow: 0 6px 14px rgba(0,0,0,0.15);
+		background-color: rgba(240,240,240,0.95);
+	}
 	</style>
 	
 	<script>
@@ -23,43 +65,140 @@
 				return hex;
 			});
 	}
-	
+
+	function getDeadline() {
+		return parseInt(localStorage.getItem('me_access_deadline') || '0', 10);
+	}
+
+	function isSessionValid() {
+		return Date.now() < getDeadline();
+	}
+
+	function showAuthMessage() {
+		document.getElementById('auth-message').style.display = 'block';
+	}
+
+	function hideAuthMessage() {
+		document.getElementById('auth-message').style.display = 'none';
+	}
+
+	function showContent() {
+		document.getElementById('content').style.display = 'block';
+	}
+
+	function hideContent() {
+		document.getElementById('content').style.display = 'none';
+	}
+
+	function showTimeoutOverlay(message) {
+		document.getElementById('timeout-text').textContent = message;
+		document.getElementById('timeout-overlay').style.display = 'flex';
+	}
+
+	function hideTimeoutOverlay() {
+		document.getElementById('timeout-overlay').style.display = 'none';
+	}
+
+	let accessTimer = null;
+	let warned = false;
+
+	function startCountdown() {
+		if (accessTimer) {
+			clearInterval(accessTimer);
+		}
+		accessTimer = setInterval(() => {
+			const remaining = getDeadline() - Date.now();
+			if (remaining <= 0) {
+				expireAccess();
+				return;
+			}
+			if (remaining <= 30000 && !warned) {
+				warned = true;
+				alert('访问时间只剩30秒');
+			}
+		}, 1000);
+	}
+
+	function expireAccess() {
+		if (accessTimer) {
+			clearInterval(accessTimer);
+		}
+		hideContent();
+		hideAuthMessage();
+		hideTimeoutOverlay();
+		showTimeoutOverlay('访问时间已结束，请选择继续访问或返回主页。');
+		localStorage.removeItem('me_access_deadline');
+	}
+
+	function setAccessTimer() {
+		const deadline = Date.now() + 10 * 60 * 1000;
+		localStorage.setItem('me_access_deadline', deadline.toString());
+		warned = false;
+		startCountdown();
+	}
+
 	async function verifyPassword() {
-		var password = prompt("请输入访问密码:");
+		hideTimeoutOverlay();
+		showAuthMessage();
+
+		var password = prompt('请输入访问密码:');
 		if (!password) {
-			alert("请输入密码！");
+			alert('请输入密码！');
 			setTimeout(verifyPassword, 1000);
 			return;
 		}
-		
+
 		try {
 			const hashed = await sha256(password);
-			const correctHash = "07fceed9808e3263048adeb97c2cf41d5b817e5885fc8dd660958e0061393ea3";
-			
+			const correctHash = '07fceed9808e3263048adeb97c2cf41d5b817e5885fc8dd660958e0061393ea3';
+
 			if (hashed === correctHash) {
-				document.getElementById('content').style.display = 'block';
+				hideAuthMessage();
+				showContent();
+				setAccessTimer();
 			} else {
-				alert("密码错误，请重试！");
+				alert('密码错误，请重试！');
 				verifyPassword();
 			}
 		} catch (error) {
-			alert("验证失败，请重试。");
+			alert('验证失败，请重试。');
 			verifyPassword();
 		}
 	}
-	
-	// 页面加载时自动验证密码
-	window.onload = function() {
+
+	function continueAccess(event) {
+		event.preventDefault();
+		hideTimeoutOverlay();
 		verifyPassword();
+	}
+
+	window.onload = function() {
+		document.getElementById('continue-access').addEventListener('click', continueAccess);
+		if (isSessionValid()) {
+			hideAuthMessage();
+			hideTimeoutOverlay();
+			showContent();
+			startCountdown();
+		} else {
+			hideContent();
+			showAuthMessage();
+			verifyPassword();
+		}
 	};
 	</script>
 
 </head>
 
 <body>
+	<div id="auth-message">正在验证身份，请输入密码后继续访问。</div>
+	<div id="timeout-overlay">
+		<p id="timeout-text">访问时间已结束，请选择继续访问或返回主页。</p>
+		<a href="home.html" class="action-btn">返回主页</a>
+		<a href="#" id="continue-access" class="action-btn">继续访问</a>
+	</div>
 	<div id="content">
 		<h1>个人主页</h1>
-		<p class = "name"><a href="home.html">/返回首页</a></p>
+		<p class = "name"><a id="返回首页" href="home.html">/返回首页</a></p>
 		<div class="kuang">
 			<div class="text">
 			  	<h6>基本信息</h6>
@@ -105,6 +244,13 @@
 				</ul>
 			</div>
 		</div>
+		<div class="kuang">
+			<div class="text">
+				<h6>移动应用开发比赛</h6>
+				<p class="xinxi">
+					2026年5月参加安卓移动应用开发比赛，比赛并没有开始，现在处于学习阶段。学习目标时鸿蒙移动应用开发，再学习安卓移动应用开发，最后总结两者，希望两者都能学好，比赛也能取得好成绩。比赛后该部分会更新比赛内容和总结。
+				</p>
+			</div>
 	</div>
 </body>
 </html>

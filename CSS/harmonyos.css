@@ -1,0 +1,10 @@
+div.kuang{
+    border: 2px solid black;
+    margin-bottom: 18px
+}
+h3.smallTitle,p.smallText{
+    padding-left: 36px;
+}
+p.smallText{
+    font-size: 18px;
+}
