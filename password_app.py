@@ -1,32 +1,64 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 """
-本地密码验证服务器
-用于保护网站访问
+密码管理脚本和服务器
+用于生成加密后的密码并验证，以及提供本地密码验证服务器
 """
 
+import hashlib
+import json
+import os
 import http.server
 import socketserver
-import json
-import hashlib
-import os
 import traceback
+import secrets
 
-PORT = 9090
 PASSWORD_FILE = 'password.json'
+PORT = 9090
 
 class PasswordHandler(http.server.SimpleHTTPRequestHandler):
+    def __init__(self, *args, **kwargs):
+        self.password_file = PASSWORD_FILE
+        self.load_password()
+        super().__init__(*args, **kwargs)
+    
     def load_password(self):
-        try:
-            if os.path.exists(PASSWORD_FILE):
-                with open(PASSWORD_FILE, 'r', encoding='utf-8') as f:
-                    return json.load(f)
-        except Exception as e:
-            print(f"加载密码文件失败: {e}")
-        return {}
+        self.data = {
+            "password_hash": "07fceed9808e3263048adeb97c2cf41d5b817e5885fc8dd660958e0061393ea3",
+            "password_me": "2b$12$ZMA.0Bnmtls9hIpstTOFwu41WcTA2tzevNgZcKSob6cPHVDT2M6ze"
+        }
+    
+    def save_password(self):
+        pass  # 密码固定，不保存到文件
+    
+    def set_password(self, password):
+        """设置密码并加密存储"""
+        hashed = self.hash_password(password)
+        self.data['password_hash'] = hashed
+        self.save_password()
+        print("密码设置成功！")
     
     def hash_password(self, password):
+        """加密密码"""
         return hashlib.sha256(password.encode('utf-8')).hexdigest()
+    
+    def verify_password(self, password):
+        """验证密码"""
+        if 'password_hash' not in self.data:
+            return False
+        hashed = self.hash_password(password)
+        return hashed == self.data['password_hash']
+    
+    def generate_token(self):
+        """生成访问令牌"""
+        token = secrets.token_hex(16)
+        self.data['access_token'] = token
+        self.save_password()
+        return token
+    
+    def verify_token(self, token):
+        """验证访问令牌"""
+        return self.data.get('access_token') == token
     
     def do_GET(self):
         print(f"接收到请求: {self.path}")
@@ -62,19 +94,7 @@ class PasswordHandler(http.server.SimpleHTTPRequestHandler):
 
 def main():
     try:
-        # 检查密码文件
-        if not os.path.exists(PASSWORD_FILE):
-            # 生成默认密码
-            default_password = 'yhg123'
-            hashed = hashlib.sha256(default_password.encode('utf-8')).hexdigest()
-            
-            with open(PASSWORD_FILE, 'w', encoding='utf-8') as f:
-                json.dump({'password_hash': hashed}, f, ensure_ascii=False, indent=2)
-            
-            print(f"默认密码已设置: {default_password}")
-            print("请运行 password_manager.py 来修改密码")
-        else:
-            print("密码文件已存在")
+        print("密码文件已内置")
         
         # 启动服务器
         print(f"准备启动服务器在端口 {PORT}")
