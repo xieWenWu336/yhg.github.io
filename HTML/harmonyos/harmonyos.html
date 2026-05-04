@@ -8,19 +8,20 @@
 </head>
 <body>
     <h1>鸿蒙移动应用开发</h1>
+    <h2>第一章：标识符</h2>
     <div class="kuang">
         <h3 class="smallTitle">变量类型</h3>
         <p class="smallText" style="margin-left: 40px;">
-            文字信息：‘字符串’类型（String）<br>
-            数字信息：‘数值’类型（Number）<br>
-            状态信息：‘布尔’类型（Boolean）<br>
+            <strong>文字信息：</strong>‘字符串’类型（String）<br>
+            <strong>数字信息：</strong>‘数值’类型（Number）<br>
+            <strong>状态信息：</strong>‘布尔’类型（Boolean）<br>
         </p>
     </div>
     <div class="kuang">
         <h3 class="smallTitle">变量声明</h3>
         <p class="smallText" style="margin-left: 40px;">
             使用 let 关键字声明变量。<br>
-            格式：let 变量名:变量类型 = 变量值；<br>
+            <strong>格式：</strong>let 变量名:变量类型 = 变量值；<br>
             
         </p>
     </div>
@@ -28,7 +29,7 @@
         <h3 class="smallTitle">常量声明</h3>
         <p class="smallText" style="margin-left: 40px;">
             使用 const 关键字声明常量。<br>
-            格式：const 常量名:变量类型 = 常量值；<br>
+            <strong>格式：</strong>const 常量名:变量类型 = 常量值；<br>
         </p>
     </div>
     <div class="kuang">
@@ -39,6 +40,168 @@
             3、不能使用关键字(const、let、class、if、for等)<br>
             4、区分大小写:Name和name是两个不同的变量<br>
             5、不能有空格，特殊符号(@ # $ - 都不行)
+        </p>
+    </div>
+    <div class="kuang">
+        <h3 class="smallTitle">数组定义</h3>
+        <p class="smallText" style="margin-left: 40px;">
+            数组是一种特殊的变量类型，可以存储多个值。<br>
+            <strong>定义格式：</strong>let 数组名:数据类型[] = [元素1, 元素2, ...]；<br><br>
+            数组还有下标<br>
+            <strong>访问方式：</strong>数组名[下标]，下标从0开始。<br>
+        </p>
+    </div>
+    <div class="kuang">
+        <h3 class="smallTitle">对象</h3>
+        <p class="smallText" style="margin-left: 40px;">
+            <strong>对象定义：</strong>对象是一种复杂的数据类型，可以存储多个属性和方法。<br>
+            <strong>作用：</strong>使用class约定对象的结构和类型<br>
+            <strong>定义格式：</strong>class 类名 {<br>
+                &nbsp;&nbsp;&nbsp;&nbsp;属性1:类型；<br>
+                &nbsp;&nbsp;&nbsp;&nbsp;属性2:类型；<br>
+                ...<br>
+            }<br>
+        </p>
+    </div>
+    <div class="kuang">
+        <h3 class="smallTitle">普通函数</h3>
+        <p class="smallText" style="margin-left: 40px;">
+            <strong>定义函数：</strong>使用 function 关键字定义函数。<br>
+            <strong>格式：</strong>function 函数名(参数) {<br>
+                &nbsp;&nbsp;&nbsp;&nbsp;函数体<br>
+            }<br><br>
+            <strong>调用函数：</strong>函数名(实参)；<br>
+            <strong>特点：</strong>一次定义，多次使用<br>
+        </p>
+    </div>
+    <div class="kuang">
+        <h3 class="smallTitle">箭头函数</h3>
+        <p class="smallText" style="margin-left: 40px;">
+            <strong>定义函数：</strong>使用箭头语法定义函数。<br>
+            <strong>格式：</strong>const 函数名 = (参数) => {<br>
+                &nbsp;&nbsp;&nbsp;&nbsp;函数体<br>
+            };<br><br>
+            <strong>调用函数：</strong>函数名(实参)；<br>
+            <strong>特点：</strong>语法简洁，this指向定义时所在的对象<br>
+        </p>
+    </div>
+    <h2>第二章：UI排版</h2>
+    <div class="kuang">
+        <h3 class="smallTitle">容器组件</h3>
+        <p class="smallText" style="margin-left: 40px;">
+            <strong>组件：</strong><br>
+            &nbsp;&nbsp;&nbsp;&nbsp;column(){}<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;row(){}<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;stack(){}<br><br>
+            <strong>纵向排版（换行排列）：</strong><br>
+            &nbsp;&nbsp;&nbsp;&nbsp;column(){<br>
+                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;组件1<br>
+                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;组件2<br>
+                &nbsp;&nbsp;&nbsp;&nbsp;}<br><br>
+            <strong>横向排版（一行排列）：</strong><br>
+            &nbsp;&nbsp;&nbsp;&nbsp;row(){<br>
+                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;组件1<br>
+                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;组件2<br>
+                &nbsp;&nbsp;&nbsp;&nbsp;}<br><br>
+            <strong>层叠排版（重叠排列）：</strong><br>
+            &nbsp;&nbsp;&nbsp;&nbsp;stack(){<br>
+                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;组件1<br>
+                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;组件2<br>
+                &nbsp;&nbsp;&nbsp;&nbsp;}<br><br>
+            <span style="color: red;">一个builder只能有一个根组件，根组件可以包含多个子组件。</span>
+        </p>
+    </div>
+    <div class="kuang">
+        <h3 class="smallTitle">内容组件</h3>
+        <p class="smallText" style="margin-left: 40px;">
+            <strong>组件：</strong><br>
+            &nbsp;&nbsp;&nbsp;&nbsp;text()<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;image()<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;button()<br><br>
+            <strong>文本组件：</strong><br>
+            &nbsp;&nbsp;&nbsp;&nbsp;text("文本内容")<br><br>
+            <strong>滚动字幕组件：</strong><br>
+            &nbsp;&nbsp;&nbsp;&nbsp;List(&nbsp;){<br>
+                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;ListItem(&nbsp;){&nbsp;}<br>
+                &nbsp;&nbsp;&nbsp;&nbsp;}<br>
+                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;.scrollBar(BarState.Off)<br><br>
+            <strong>图片组件：</strong><br>
+            &nbsp;&nbsp;&nbsp;&nbsp;image($r("app.media.XX"))<br><br>
+            <strong>按钮组件：</strong><br>
+            &nbsp;&nbsp;&nbsp;&nbsp;button("按钮文本", 点击事件)<br>
+        </p>
+    </div>
+    <div class="kuang">
+        <h3 class="smallTitle">属性</h3>
+        <p class="smallText" style="margin-left: 40px;">
+            <strong>通用属性：</strong><br>
+            width:宽度&nbsp;&nbsp;&nbsp;&nbsp;<em class="zhi">数值（默认单位：up）</em><br>
+            height:高度&nbsp;&nbsp;&nbsp;&nbsp;<em class="zhi">数值（默认单位：up）</em><br>
+            bacgroundColor:背景颜色&nbsp;&nbsp;&nbsp;&nbsp;<em class="zhi">色值（内置颜色或十六进制数）</em><br><br>
+            <strong>文本属性：</strong><br>
+            fontSize:字体大小&nbsp;&nbsp;&nbsp;&nbsp;<em class="zhi">数值（默认单位：up）</em><br>
+            color:字体颜色&nbsp;&nbsp;&nbsp;&nbsp;<em class="zhi">色值（内置颜色或十六进制数）</em><br>
+             textAlign:文本对齐方式&nbsp;&nbsp;&nbsp;&nbsp;<em class="zhi">left（左对齐）center（居中）right（右对齐）</em><br><br>
+            <strong>图片属性：</strong><br>
+            width:宽度&nbsp;&nbsp;&nbsp;&nbsp;<em class="zhi">数值（默认单位：up）</em><br>
+            height:高度&nbsp;&nbsp;&nbsp;&nbsp;<em class="zhi">数值（默认单位：up）</em><br>
+            fit:图片适应方式&nbsp;&nbsp;&nbsp;&nbsp;<em class="zhi">cover（裁剪）contain（缩放）fill（拉伸）none（原尺寸）</em><br><br>
+            <strong>按钮属性：</strong><br>
+            width:宽度&nbsp;&nbsp;&nbsp;&nbsp;<em class="zhi">数值（默认单位：up）</em><br>
+            height:高度&nbsp;&nbsp;&nbsp;&nbsp;<em class="zhi">数值（默认单位：up）</em><br>
+            backgroundColor:背景颜色&nbsp;&nbsp;&nbsp;&nbsp;<em class="zhi">色值（内置颜色或十六进制数）</em><br>
+            color:字体颜色&nbsp;&nbsp;&nbsp;&nbsp;<em class="zhi">色值（内置颜色或十六进制数）</em><br>
+            textAlign:文本对齐方式&nbsp;&nbsp;&nbsp;&nbsp;<em class="zhi">left（左对齐）center（居中）right（右对齐）</em><br><br>
+            <strong>事件属性：</strong><br>
+            onClick:点击事件&nbsp;&nbsp;&nbsp;&nbsp;<em class="zhi">函数</em><br>
+            onLongClick:长按事件&nbsp;&nbsp;&nbsp;&nbsp;<em class="zhi">函数</em><br>
+            onHover:悬停事件&nbsp;&nbsp;&nbsp;&nbsp;<em class="zhi">函数</em><br><br>
+            <strong>布局属性：</strong><br>
+            padding:内边距&nbsp;&nbsp;&nbsp;&nbsp;<em class="zhi">数值（默认单位：up）</em><br>
+            margin:外边距&nbsp;&nbsp;&nbsp;&nbsp;<em class="zhi">数值（默认单位：up）</em><br>
+            <em class="blue" style="margin-left: 40px;">padding和margin可以分别设置四个方向的值(如Top、Bottom、Left、Right等。不写时默认为0)
+            如果没写中括号，而是括号中一个值就说明四个方向的值都相同</em><br>
+            alignItems:子组件对齐方式&nbsp;&nbsp;&nbsp;&nbsp;<em class="zhi">start（起始对齐）center（居中对齐）end（结束对齐）</em><br>
+            justifyContent:子组件分布方式&nbsp;&nbsp;&nbsp;&nbsp;<em class="zhi">start（起始分布）center（居中分布）end（结束分布）spaceBetween（两端分布）spaceAround（均匀分布）</em><br>
+            <em class="blue">alignItems和justifyContent只能用于容器组件，且只对直接子组件生效</em><br><br>
+            <strong>特殊属性：</strong><br>
+            span:跨列属性&nbsp;&nbsp;&nbsp;&nbsp;<em class="zhi">数值</em><br>
+            offset:偏移属性&nbsp;&nbsp;&nbsp;&nbsp;<em class="zhi">数值</em><br>
+            <em class="blue">span和offset只能用于column和row组件，且span表示占用的列数，offset表示偏移的列数</em><br><br>
+            <strong>边框属性：</strong><br>
+            borderWidth:边框宽度&nbsp;&nbsp;&nbsp;&nbsp;<em class="zhi">数值（默认单位：up）</em><br>
+            borderColor:边框颜色&nbsp;&nbsp;&nbsp;&nbsp;<em class="zhi">色值（内置颜色或十六进制数）</em><br>
+            borderRadius:边框圆角&nbsp;&nbsp;&nbsp;&nbsp;<em class="zhi">数值（默认单位：up）</em><br>
+            boederStyle:边框样式&nbsp;&nbsp;&nbsp;&nbsp;<em class="zhi">solid（实线）dashed（虚线）dotted（点线）none（无边框）</em><br>
+            <em class="blue">边框属性可以同时设置四个方向的值(如Top、Bottom、Left、Right等。不写时默认为0或none)</em><br>
+            <em class="blue">边框属性可以在中括号中写入Width、Height、Color、Style等属性</em><br><br>
+            <strong>其他属性：</strong><br>
+            id:组件标识符&nbsp;&nbsp;&nbsp;&nbsp;<em class="zhi">字符串</em><br>
+            class:组件分类&nbsp;&nbsp;&nbsp;&nbsp;<em class="zhi">字符串</em><br>
+            style:组件样式&nbsp;&nbsp;&nbsp;&nbsp;<em class="zhi">对象</em><br>
+            <em class="blue">id和class可以用于组件的选择器，style可以直接在组件上设置样式</em><br>
+        </p>
+    </div>
+    <div class="kuang">
+        <h3 class="smallTitle">条件分支语句</h3>
+        <p class="smallText" style="margin-left: 40px;">
+            if(条件){<br>
+                &nbsp;&nbsp;&nbsp;&nbsp;执行语句<br>
+            }else if(条件){<br>
+                &nbsp;&nbsp;&nbsp;&nbsp;执行语句<br>
+            }else{<br>
+                &nbsp;&nbsp;&nbsp;&nbsp;执行语句<br>
+            }<br><br>
+            switch(表达式){<br>
+                &nbsp;&nbsp;&nbsp;&nbsp;case 值1:<br>
+                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;执行语句<br>
+                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;break;<br>
+                &nbsp;&nbsp;&nbsp;&nbsp;case 值2:<br>
+                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;执行语句<br>
+                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;break;<br>
+                &nbsp;&nbsp;&nbsp;&nbsp;default:<br>
+                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;执行语句<br>
+            }<br>
         </p>
     </div>
 </body>

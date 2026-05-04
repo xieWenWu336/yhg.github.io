@@ -1,10 +1,27 @@
-div.kuang{
-    border: 2px solid black;
-    margin-bottom: 18px
+h1{
+    text-align: center;
+    font-size: 40px;
 }
-h3.smallTitle,p.smallText{
+h2{
+    text-align: center;
+    font-size: 30px;
+}
+.kuang{
+    border: 2px solid black;
+    margin-left: 10px;
+    margin-right: 10px;
+    margin-bottom: 18px;
+}
+.smallTitle,.smallText{
+    font-size: 22px;
     padding-left: 36px;
 }
-p.smallText{
+.smallText{
     font-size: 18px;
+}
+.zhi{
+    color: #999;
+}
+.blue{
+    color: #00f;
 }
